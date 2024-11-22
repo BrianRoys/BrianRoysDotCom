@@ -1,0 +1,43 @@
+body {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
+
+.jumbotron {
+    background-color: #EEF;
+}
+
+.mydata {
+    background-color: #FEF;
+	border: 1px solid #dcd;
+}
+
+.footer  {
+	position: absolute;
+	bottom: 0;
+	//width: 100%;
+	background-color: #ddf;
+	font-size: x-small;
+}
+
+.col {
+	margin: 4px;
+}
+
+html { 
+	height: 100%; 
+}

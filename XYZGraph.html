@@ -1,0 +1,359 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>XYZ Graphs</title>
+	<meta name="description" content="Webpage by Brian Roys to Draw 3D Graphs">
+	<!-- http://meyerweb.com/eric/tools/css/reset/ -->
+	<link rel="stylesheet" href="reset.css">
+	<!--  <link rel="stylesheet" href="3D-Graphs.css"> -->
+	<link rel="stylesheet" href="XYZGraph.css">
+	<!--[if lt IE 9]>
+	  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+	<![endif]-->
+
+	<script>
+
+		window.onload = initGraph;
+	
+		var zFactor;
+		var zGrid;
+
+		// Box Resolution
+		var xres = 1024.0
+		var yres = 768.0;
+		function pctX(x) {
+			return xres * x / 100.0;
+		}
+		function pctY(y) {
+			return yres - (yres * y / 100.0);
+		}
+
+		var range = 10;
+		var xmin = -range;
+		var xmax = range;
+		var ymin = -range;
+		var ymax = range;
+
+		var steps = 100;
+		var xdivs = steps;
+		var ydivs = steps;
+
+		var zGrid;
+
+		// X, Y values in % (0 - 100)
+		var llX = 10;
+		var llY = 25;
+		var lrX = 50;
+		var lrY = 25;
+		var urX = 90;
+		var urY = 75;
+		var ulX = 50;
+		var ulY = 75;
+		
+		function initGraph()
+		{
+			zGrid = [steps * steps];
+			runGraph();
+		}
+
+		function zVal(x, y)
+		{
+		
+			// Pseudo 2D grid.
+			return zGrid[x + steps * y] * zFactor;
+		}
+		function setZVal(x, y, zIn)
+		{
+			zGrid[x + steps * y] = zIn;
+		}
+		function calculateZ(x, y)
+		{
+			var formula = document.getElementById("formula").value;
+			var r = Math.sqrt(x * x + y * y);
+			if (r == 0.0)
+			{
+				r = 0.0000001;
+			}
+			if (formula == '')
+			{
+
+				// Default 3D function.
+				z = Math.sin(r) / (r / 3);
+			}
+			else
+			{
+				z = eval(formula);
+			}
+			return z;
+		}
+
+		// Drawing stuff. x, y values are 0-100.
+		var canvas, ctx;
+		function quad(x1, y1, x2, y2, x3, y3, x4, y4)
+		{
+			x1 = pctX(x1);
+			x2 = pctX(x2);
+			x3 = pctX(x3);
+			x4 = pctX(x4);
+			y1 = pctY(y1);
+			y2 = pctY(y2);
+			y3 = pctY(y3);
+			y4 = pctY(y4);
+
+			// Draw opaque tiles to hide the lines.
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			ctx.lineTo(x2, y2);
+			ctx.lineTo(x3, y3);
+			ctx.lineTo(x4, y4);
+			ctx.lineTo(x1, y1);
+			ctx.fillStyle = 'white';
+			ctx.fill();
+			ctx.stroke();
+		}
+		function lineXY(x1, y1, x2, y2)
+		{
+			x1 = pctX(x1);
+			y1 = pctY(y1);
+			x2 = pctX(x2);
+			y2 = pctY(y2);
+
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			ctx.lineTo(x2, y2);
+			ctx.stroke();
+		}
+
+		function tryDrawGraph()
+		{
+			try
+			{
+				document.getElementById("error").innerHTML = "";
+				var formula = document.getElementById("formula").value;
+				if (formula != "")
+				{
+					var x = 1.0;
+					var y = 1.0;
+					var r = 1.0;
+					z = eval(formula);
+					calculateGrid();
+					drawGraph
+				}
+			}
+			catch (ex)
+			{
+				document.getElementById("error").innerHTML = ex.message;
+				throw ("CalculateZ Error");
+			}
+
+		}
+
+		function runGraph()
+		{
+			zFactor = 4.0
+			canvas = document.querySelector("#myCanvas");
+			ctx = canvas.getContext("2d");
+
+			calculateGrid();
+			drawGraph();
+
+			document.onkeypress = function (evt)
+			{
+				evt = evt || window.event;
+				var charCode = evt.keyCode || evt.which;
+				var charStr = String.fromCharCode(charCode);
+
+				switch (charStr) {
+					case "z":
+						zoom(1);
+						break;
+					case "Z":
+						zoom(-1);
+						break;
+					case "l":
+						shiftL(1);
+						break;
+					case "L":
+						shiftL(-1);
+						break;
+					case "r":
+						shiftR(1);
+						break;
+					case "R":
+						shiftR(-1);
+						break;
+					case "f":
+						shiftF(1);
+						break;
+					case "F":
+						shiftF(-1);
+						break;
+					case "b":
+						shiftB(1);
+						break;
+					case "B":
+						shiftB(-1);
+						break;
+				}
+			};
+		}
+
+		function calculateGrid()
+		{
+			var x, y;
+			for (var ydiv = 0; ydiv <= ydivs; ++ydiv)
+			{
+				y = (ydiv / ydivs) * (ymax - ymin) + ymin;
+				for (var xdiv = 0; xdiv <= xdivs; ++xdiv)
+				{
+					x = (xdiv / xdivs) * (xmax - xmin) + xmin;
+					setZVal(xdiv, ydiv, calculateZ(x, y));
+				}
+			}
+		}
+
+		function drawFrame(all4)
+		{
+			var ckbx = document.getElementById("doDisplayFrame");
+			if (ckbx.checked) {
+
+				// set line color
+				ctx.strokeStyle = '#0000ff';
+
+				// 3-D Frame
+				lineXY(llX, llY, lrX, lrY);
+				lineXY(lrX, lrY, urX, urY);
+				if (all4) {
+					lineXY(urX, urY, ulX, ulY);
+					lineXY(ulX, ulY, llX, llY);
+				}
+			}
+		}
+
+		function drawGraph()
+		{
+			ctx.clearRect(0, 0, xres, yres); 
+			ctx.strokeRect(0, 0, xres, yres);
+
+			drawFrame(1);
+
+			// set line color
+			ctx.strokeStyle = 'black';
+
+			var xInc = (lrX - llX) / xdivs;
+			var yInc = (ulY - llY) / ydivs;
+			var xStep = (ulX - llX) / xdivs;
+
+			var yStart;
+			var pt2X;
+			var pt2Y;
+			var pt1X;
+			var pt1Y;
+			var pt3X;
+			var pt3Y;
+			var pt4X;
+			var pt4Y;
+
+			// Draw the tiles from the back to the front to hide lines.
+			pt1Y = llY + zVal(0, 0);
+			for (var ydiv = ydivs; ydiv > 0; --ydiv)
+			{
+				for (var xdiv = 0; xdiv < xdivs - 1; ++xdiv)
+				{
+
+					// This is the shit right here; it took hours to 
+					// get this right. 
+					yStart = llY + yInc * ydiv;
+
+					pt1X = llX + xInc * ydiv + xdiv * xInc;
+					pt1Y = zVal(xdiv, ydiv) + yStart;
+
+					pt2X = llX + xInc * ydiv + (xdiv + 1) * xInc;
+					pt2Y = zVal(xdiv + 1, ydiv) + yStart;
+
+					pt3X = llX + (xdiv + 1) * xInc + (ydiv - 1) * xInc;
+					pt3Y = zVal(xdiv + 1, ydiv - 1) + yStart - yInc;
+
+					pt4X = llX + xdiv * xInc + (ydiv - 1) * xInc;
+					pt4Y = zVal(xdiv, ydiv - 1) + yStart - yInc;
+
+					quad(pt1X, pt1Y, pt2X, pt2Y, pt3X, pt3Y, pt4X, pt4Y);
+				}
+			}
+			drawFrame(0);
+			diaplayParams();
+		}
+
+		function zoom(inOut)
+		{
+			zFactor += inOut;
+			drawGraph();
+		}
+		function shiftL(shift)
+		{
+			xmin += shift;
+			calculateGrid();
+			drawGraph();
+		}
+		function shiftR(shift) 
+		{
+			xmax += shift;
+			calculateGrid();
+			drawGraph();
+		}
+		function shiftF(shift) 
+		{
+			ymin += shift;
+			calculateGrid();
+			drawGraph();
+		}
+		function shiftB(shift) 
+		{
+			ymax += shift;
+			calculateGrid();
+			drawGraph();
+		}
+		function diaplayParams()
+		{
+			document.getElementById("params").innerHTML = "PARAMETERS: XMIN=" + xmin + "&nbsp;&nbsp;XMAX=" + xmax + "&nbsp;&nbsp;YMIN=" + ymin + "&nbsp;&nbsp;YMAX=" + ymax + "&nbsp;&nbsp;ZSCALE=" + zFactor + ".";
+		}
+
+	</script>
+</head>
+<body>
+	<div>
+		<div style="margin:2em;">
+			<a href="http:\\www.brianroys.com">Back to BrianRoys&lt;dot&gt;com</a>
+			<h1 class="center">Brian Roys' 3D-Graph Program 3.0</h1>
+		</div>
+		<div class='center'>
+			<canvas id="myCanvas" width=1024 height=768>
+				Your browser does not support the canvas element. This program won't work. Upgrade!
+			</canvas>
+		</div>
+		<div class="center">
+			<div id="params" class="center"></div>
+			<div class="center">
+				Display Frame ? <input type="checkbox" id="doDisplayFrame" value="Y" onchange="drawGraph();" />
+			</div>
+		</div>
+		<div class="center">
+			<button onclick="shiftL(-1)">--Left</button>
+			<button onclick="shiftL(1)">++Left</button>
+			<button onclick="shiftR(-1)">--Right</button>
+			<button onclick="shiftR(1)">++Right</button>
+			<button onclick="shiftF(-1)">--Front</button>
+			<button onclick="shiftF(1)">++Front</button>
+			<button onclick="shiftB(-1)">--Back</button>
+			<button onclick="shiftB(1)">++Back</button>
+			<button onclick="zoom(1)">++Z</button>
+			<button onclick="zoom(-1)">--Z</button>
+		</div>
+		<div class="center">
+			3D Formula: <input type="text" id="formula" onfocusout="tryDrawGraph();" placeholder="sin(r)/(r/3)"/>
+		</div>
+		<div id="error" class="center error"></div>
+	</div>
+</body>
+</html>

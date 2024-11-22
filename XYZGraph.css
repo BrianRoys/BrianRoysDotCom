@@ -1,0 +1,39 @@
+h1 {
+	font-family: 'Microsoft Sans Serif';
+	font-size: x-large;
+}
+
+button {
+	background-color: dodgerblue;
+	margin: 0.5em;
+	padding: 0.5em;
+	font-family: Tahoma;
+	font-size: medium;
+	border-radius: 5px;
+}
+
+.center {
+	// border: 1px solid black; 
+	text-align: center;
+	/* 
+	margin: auto;
+	width: 1024px;
+	*/
+}
+
+body {
+	margin: 1em;
+	font-family: Tahoma;
+	font-size: large;
+}
+
+#params {
+	font-family: Tahoma;
+	font-size: large;
+	margin: 1em;
+}
+.error {
+	font-size: xx-large;
+	color: red;
+	font-weight: 200;
+}
