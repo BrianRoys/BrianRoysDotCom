@@ -28,7 +28,7 @@
 	<body>
 		<div>
 			<div style="margin:2em;">
-				<a href="http:\\www.brianroys.com">Back to BrianRoys&lt;dot&gt;com</a>
+				Back to <a href="http:\\www.brianroys.com">BrianRoysDotCom</a> 
 			</div>
 			<fieldset>
 				<legend title="This is just a stupid calculator, doesn't do anything fancy, just chugs through the possible factors, one by one.">Factors</legend>
@@ -71,22 +71,29 @@
 		// This is the magical incantation to allow the UI to update within the method.
 		await new Promise(resolve => setTimeout(resolve, 10)); // Wait for 1/10th of a second
 
-		// Start at one instead of zero because that would be stupid.
-		for(i = 1; i <= half; ++i)
+		// Start at two instead of zero or one because that would be stupid.
+		for(i = 2; i <= half; ++i)
 		{
 
 			// Start at i instead of one to speed it up.
 			for (j = i; j <= half; ++j)
 			{
-				if (j * i == theNumber)
+				var product = j * i;
+				if (product == theNumber)
 				{
 					theFactors += '(' + i + ', ' + j + ')&nbsp;&nbsp;';
-					$("#theFactors").html(theFactors);
 
 					// This is the magical incantation to allow the UI to update within the LOOP.
+					$("#theFactors").html(theFactors);
 					await new Promise(resolve => setTimeout(resolve, 10)); // Wait for 1/10th of a second
 
 					// Don't need to try any of the other combinations with this j.
+					break;
+				}
+
+				// Don't need to try any of the other combinations with this j.
+				if (product > theNumber)
+				{
 					break;
 				}
 			}
@@ -97,5 +104,5 @@
 		}
 		$("#theStatus").html("Done! Took " + ((Date.now() - startTime) / 1000) + ' seconds.');
 		beep();
-	}
+	} 
 </script>
