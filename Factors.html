@@ -12,9 +12,12 @@
 
 	<style>
 		fieldset {
-			background-color: aqua;
+			background-color: rgb(15, 54, 20);
 			border-radius: 10px;
 			font-weight: bold;
+			font-family: 'Courier New', Courier, monospace;
+			width: 512px;
+			color:rgb(71, 255, 95)
 		}
 		legend {
 			background-color: blue;
@@ -22,6 +25,14 @@
 			border-radius: 5px;
 			padding: 5px;
 			color: yellow;
+		}
+		input {
+			color: rgb(0, 54, 0);
+			border-radius: 1px;
+			border: 0px;
+			font-weight: bold;
+			font-family: 'Courier New', Courier, monospace;
+			background-color:rgb(71, 255, 95)
 		}
 	</style>
 
@@ -31,7 +42,7 @@
 				Back to <a href="http:\\www.brianroys.com">BrianRoysDotCom</a> 
 			</div>
 			<fieldset>
-				<legend title="This is just a stupid calculator, doesn't do anything fancy, just chugs through the possible factors, one by one.">Factors</legend>
+				<legend title="This is just a stupid calculator, doesn't do anything fancy, just chugs through the possible factors, one by one. Took minutes to write, hours to optomize.">Factors</legend>
 					<p>
 						Number: <input type="number" id="theNumber" onkeyup="CalcFactors()" />
 					</p>
@@ -81,7 +92,7 @@
 				var product = j * i;
 				if (product == theNumber)
 				{
-					theFactors += '(' + i + ', ' + j + ')&nbsp;&nbsp;';
+					theFactors += '(' + i + ',&nbsp;' + j + ') ';
 
 					// This is the magical incantation to allow the UI to update within the LOOP.
 					$("#theFactors").html(theFactors);
