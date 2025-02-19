@@ -11,6 +11,14 @@
 	</head>
 
 	<style>
+		fieldset {
+			background-color: rgb(15, 54, 20);
+			border-radius: 10px;
+			font-weight: bold;
+			font-family: 'Courier New', Courier, monospace;
+			width: 512px;
+			color:rgb(71, 255, 95)
+		}
         button {
 			border-radius: 5px;
 			font-weight: bold;
@@ -20,28 +28,12 @@
 			color: rgb(15, 54, 20);
             margin: 1em;
         }
-		fieldset {
-			background-color: rgb(15, 54, 20);
-			border-radius: 10px;
-			font-weight: bold;
-			font-family: 'Courier New', Courier, monospace;
-			width: 512px;
-			color:rgb(71, 255, 95)
-		}
 		legend {
 			background-color: blue;
 			border: 1px blue;
 			border-radius: 5px;
 			padding: 5px;
 			color: yellow;
-		}
-		input {
-			color: rgb(0, 54, 0);
-			border-radius: 1px;
-			border: 0px;
-			font-weight: bold;
-			font-family: 'Courier New', Courier, monospace;
-			background-color:rgb(71, 255, 95)
 		}
 	</style>
 
@@ -51,18 +43,18 @@
 				Back to <a href="http:\\www.brianroys.com">BrianRoysDotCom</a> 
 			</div>
 			<fieldset>
-				<legend title="1 to 100, Fizz if a multiple of three, Buzz if multiple of five, FizzBuzz if multiple of both.">FizzBuzz!</legend>
-                    <button onclick="CalcFizzBuzz();">Go!</button>
-                    <div id="Output">
-                    </div>
+				<legend title="1 to 100 (FizzBuzzMax), Fizz if a multiple of three, Buzz if multiple of five, FizzBuzz if multiple of both.">FizzBuzz!</legend>
+				<button onclick="CalcFizzBuzz();">Go!</button>
+				<div id="Output">
+				</div>
 			</fieldset>
 		</div>
 	</body>
 </html>
 
 <script>
-	var theFactors = '';
-	var theNumber = 0;
+
+	var FizzBuzzMax = 100;
 
 	function beep() 
 	{
@@ -73,12 +65,14 @@
 	async function CalcFizzBuzz()
 	{
         var strOut = '';
-        for (n = 1; n <= 100; ++n)
+
+		// Build the results string, then display it.
+        for (n = 1; n <= FizzBuzzMax; ++n)
         {
 
             // Double check with the specs: 3 = fizz, 5 = buzz.
 
-            if ((n % 3 == 0) && (n % 5 ==0))
+            if ((n % 3 == 0) && (n % 5 == 0))
             {
                 strOut += "FizzBuzz";
             }
@@ -102,7 +96,7 @@
             }
 
             // Don't have a trailing comma-space.
-            if (n < 100)
+            if (n < FizzBuzzMax)
             {
                 strOut += ", ";
             }
