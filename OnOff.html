@@ -8,70 +8,67 @@
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
 		<![endif]-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	</head>
 
 	<style>
-		fieldset {
-			background-color: rgb(15, 54, 20);
+		body {
+			margin: 1em;
+		}
+		#Screen {
+			background-color: rgb(15, 54, 15);
+			border: 3px;
 			border-radius: 10px;
 			font-weight: bold;
 			font-family: 'Courier New', Courier, monospace;
 			color:rgb(99, 255, 99);
 			display: inline-block;
-			width: 80en;
-		}
-        button {
-			border-radius: 5px;
-			font-weight: bold;
-			font-size: large;
-			font-family: 'Courier New', Courier, monospace;
-			background-color:rgb(71, 255, 95);
-			color: rgb(15, 54, 20);
-            margin: 1em;
-        }
-		legend {
-			background-color: blue;
-			border: 1px blue;
-			border-radius: 5px;
-			padding: 5px;
-			color: yellow;
+			/* width: 60em; */
+			margin: 1em;
+			padding: 1em;
 		}
 	</style>
 
+	<header>
+		<a href="index.html" title="Go to brianroys.com home page">
+			<img src="home.jpg" alt="Go to brianroys.com home page" width="80px;" height="80px;"/>
+		</a>
+	</header>
 	<body>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>		
 		<div>
-			<div style="margin:2em;">
-				Back to <a href="http:\\www.brianroys.com">BrianRoysDotCom</a> 
-			</div>
-			<fieldset>
-				<legend title="If the pixel is off turn it on, off turn it on.">OnOff</legend>
-				<button onclick="RunOffOn();">Go!</button>
-				<div id="Output">
-					
-				</div>
-				<p>
-					<span id="pct"></span>
-				</p>
-				<p>
-					Back around 1985 we had just made the jump from COBOL to C and were having a blast writing tools and games and toys.
-					One I wrote just randomly toggled pixels on and off. I knew intuitively that while it started out blank, it would 
-					fill the screen then settle down with about 50% coverage and go up and down around 50%. I'm sure there is a 
-					mathmatical proof but "at a greater than 50% fill the odds of hitting an ON pixel are greater than 50%" is all I can 
-					articulate.
-				</p>
-			</fieldset>
+			<p>
+				Back around 1985 we had just made the jump from COBOL to C and were having a blast writing tools and games and toys.
+				One I wrote just randomly toggled pixels on and off. I knew intuitively that while it started out blank, it would 
+				fill the screen then settle down and hover with around 50% coverage. I'm sure there is a 
+				mathmatical proof but "at a greater than 50% full the odds of hitting an ON pixel are greater than 50%" is all I can 
+				articulate.
+			</p>
+			<p>
+				Turns out this little program is <i>multi-threaded!</i> The more times you click the Go button the more processes run.
+				And that is just fine.
+			</p>
+			<p>
+
+				<button class="btn btn-primary" onclick="RunOffOn();">Go!</button>
+			</p>
+			<p id="Screen">
+			</p>
+			<p>
+				<span id="pct"></span>
+			</p>
 		</div>
 	</body>
 </html>
 
 <script>
+	var NRows = 24;
+	var NCols = 80;
+	var Rows;
 
-	async function RunOffOn()
+	function ClearScreen()
 	{
-		var NRows = 24;
-		var NCols = 80;
-
-		var Rows = Array(NRows);
+		Rows = Array(NRows);
 		for (i = 0; i < NRows; ++i)
 		{
 			Rows[i] = Array(NCols);
@@ -80,10 +77,11 @@
 				Rows[i][j] = 0;
 			}
 		}
-
-		while (true)
-		{
-			var StrOut = "";
+	}
+	
+	function DisplayScreen()
+	{
+		var StrOut = "";
 			var ons = 0;
 			var offs = 0;
 			for (i = 0; i < NRows; ++i)
@@ -99,22 +97,35 @@
 					{
 						ons++;
 					}
-					StrOut += onoff ? '&nbsp;' : '@';
+					StrOut += onoff ? '&nbsp;' : '█';
 				}
 				StrOut += "</br>"
 			}
 
-			$("#Output").html(StrOut);
+			$("#Screen").html(StrOut);
 			var pct = Math.trunc(ons / (ons + offs) * 100);
 			$("#pct").html("Coverage: (" + ons + ":" + offs + ") " + pct + "%");
+	}
+
+	async function RunOffOn()
+	{
+		ClearScreen();
+		while (true)
+		{
 
 			i = Math.trunc(Math.random() * NRows);
 			j = Math.trunc(Math.random() * NCols);
 
 			Rows[i][j] = 1 - Rows[i][j];
 
+			DisplayScreen();
+
 			// This is the magical incantation to allow the UI to update within the loop.
 			await new Promise(resolve => setTimeout(resolve, 10)); // Wait for x/1000th of a second
 		}
 	} 
+
+	ClearScreen();
+	DisplayScreen();
+
 </script>
