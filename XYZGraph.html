@@ -259,8 +259,9 @@
 				for (var xdiv = 0; xdiv < xdivs - 1; ++xdiv)
 				{
 
-					// This is the shit right here; it took hours to 
-					// get this right. 
+					// This is the sh*t right here; it took hours to 
+					// get this right, but now that it is done, it looks
+					// obvious and simple. 
 					yStart = llY + yInc * ydiv;
 
 					pt1X = llX + xInc * ydiv + xdiv * xInc;
@@ -352,7 +353,7 @@
 			<button onclick="zoom(-1)">--Z</button>
 		</div>
 		<div class="center">
-			3D Formula: <input type="text" id="formula" onfocusout="tryDrawGraph();" placeholder="sin(r)/(r/3)"/>
+			3D Formula: <input type="text" id="formula" onfocusout="tryDrawGraph();" placeholder="Math.sin(r)/(r/3)"/>
 		</div>
 		<div id="error" class="center error"></div>
 	</div>
