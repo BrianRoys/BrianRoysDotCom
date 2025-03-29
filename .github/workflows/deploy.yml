@@ -14,7 +14,8 @@ jobs:
         uses: actions/checkout@v2
         
       - name: FTP Deploy
-        uses: samuelmeuli/action-ftp-deploy@v1.0.0  # Use the latest version available
+        # uses: samuelmeuli/action-ftp-deploy@v1.0.0  # Use the latest version available
+        uses: BrianRoys/Deploy-Action@4.0.0
         with:
           server: ${{ secrets.FTP_SERVER }}         # Your FTP server address
           username: ${{ secrets.FTP_USERNAME }}     # Your FTP username
