@@ -14,11 +14,10 @@ jobs:
         uses: actions/checkout@v2
         
       - name: FTP Deploy
-        # uses: BrianRoys/Ftp-Deploy-Action@4.0.0
         uses: SamKirkland/Ftp-Deploy-Action@4.0.0
         with:
           server: ${{ secrets.FTP_SERVER }}         # Your FTP server address
           username: ${{ secrets.FTP_USERNAME }}     # Your FTP username
           password: ${{ secrets.FTP_PASSWORD }}     # Your FTP password
-          local-dir: BrianRoys/BrianRoysDotCom/     # Path to your local build directory
+          local-dir: ./     # Path to your local build directory
           server-dir: /public_html/                 # Path on FTP server to deploy to
