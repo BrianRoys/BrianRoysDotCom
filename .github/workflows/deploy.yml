@@ -19,5 +19,5 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}         # Your FTP server address
           username: ${{ secrets.FTP_USERNAME }}     # Your FTP username
           password: ${{ secrets.FTP_PASSWORD }}     # Your FTP password
-          local-dir: /BrianRoysDotCom/                             # Path to your local build directory
+          local-dir: BrianRoys/BrianRoysDotCom/     # Path to your local build directory
           server-dir: /public_html/                 # Path on FTP server to deploy to
