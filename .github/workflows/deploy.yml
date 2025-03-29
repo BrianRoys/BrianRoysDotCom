@@ -15,10 +15,10 @@ jobs:
         
       - name: FTP Deploy
         # uses: samuelmeuli/action-ftp-deploy@v1.0.0  # Use the latest version available
-        uses: BrianRoys/Deploy-Action@4.0.0
+        uses: BrianRoys/Ftp-Deploy-Action@4.0.0
         with:
           server: ${{ secrets.FTP_SERVER }}         # Your FTP server address
           username: ${{ secrets.FTP_USERNAME }}     # Your FTP username
           password: ${{ secrets.FTP_PASSWORD }}     # Your FTP password
-          local-dir: C:\Users\brian\Dropbox\www.brianroys.com\ # Path to your local build directory
-          server-dir: /public_html/           # Path on FTP server to deploy to
+          local-dir: ./                             # Path to your local build directory
+          server-dir: /public_html/                 # Path on FTP server to deploy to
