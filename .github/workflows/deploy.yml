@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      
+      - name: Init
+        run: echo Starting up FTP Deployment
+        
       - name: Checkout code
         uses: actions/checkout@v2
         
@@ -19,5 +23,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}         # Your FTP server address
           username: ${{ secrets.FTP_USERNAME }}     # Your FTP username
           password: ${{ secrets.FTP_PASSWORD }}     # Your FTP password
+          port: 21
           local-dir: ./     # Path to your local build directory
           server-dir: /public_html/                 # Path on FTP server to deploy to
