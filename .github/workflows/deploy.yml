@@ -1,0 +1,23 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - master  # Change to your desired branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: FTP Deploy
+        uses: samuelmeuli/action-ftp-deploy@v1.0.0  # Use the latest version available
+        with:
+          server: ${{ secrets.FTP_SERVER }}         # Your FTP server address
+          username: ${{ secrets.FTP_USERNAME }}     # Your FTP username
+          password: ${{ secrets.FTP_PASSWORD }}     # Your FTP password
+          local-dir: C:\Users\brian\Dropbox\www.brianroys.com\ # Path to your local build directory
+          server-dir: /public_html/           # Path on FTP server to deploy to

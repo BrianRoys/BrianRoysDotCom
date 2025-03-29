@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Project Goals</title>
+    <meta name="description" content="You can only have so much.">
+    <!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+		<![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<style>
+    fieldset {
+        background-color: rgb(15, 54, 20);
+        border-radius: 10px;
+        font-size: large;
+        font-weight: bold;
+        font-family: 'Courier New', Courier, monospace;
+        width: 512px;
+        color: rgb(71, 255, 95)
+    }
+
+    button {
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: large;
+        font-family: 'Courier New', Courier, monospace;
+        background-color: rgb(71, 255, 95);
+        color: rgb(15, 54, 20);
+        margin: 1em;
+    }
+
+    legend {
+        background-color: blue;
+        border: 1px blue;
+        border-radius: 5px;
+        padding: 5px;
+        color: yellow;
+    }
+</style>
+
+<header>
+    <a href="index.html" title="Go to brianroys.com home page">
+        <img src="home.jpg" alt="Go to brianroys.com home page" width="80px;" height="80px;" />
+    </a>
+</header>
+
+<body>
+    <div>
+        <fieldset>
+            <legend title="You can have Good, Fast or Cheap; pick two, but not all three.">Good/Fast/Cheap!</legend>
+            Quality:
+            <input type="range" id="goodRng" name="goodRng" min="0" max="100" value="66" step="10"
+                onchange="HandleChange(this)" />
+            <br />
+            Speed:&nbsp;&nbsp;
+            <input type="range" id="fastRng" name="fastRng" min="0" max="100" value="66" step="10"
+                onchange="HandleChange(this)" />
+            <br />
+            Economy:
+            <input type="range" id="cheapRng" name="cheapRng" min="0" max="100" value="66" step="10"
+                onchange="HandleChange(this)" />
+        </fieldset>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    var previousCtrl = "goodRng";
+
+    function HandleChange(ctl) {
+        var gv = Number($("#goodRng").val());
+        var fv = Number($("#fastRng").val());
+        var cv = Number($("#cheapRng").val());
+        switch (ctl.name) {
+            case 'goodRng':
+                if (previousCtrl == 'cheapRng') {
+                    fv = 200 - (cv + gv);
+                }
+                else {
+                    cv = 200 - (fv + gv);
+                }
+                break;
+            case 'cheapRng':
+                if (previousCtrl == 'goodRng') {
+                    fv = 200 - (gv + cv);
+                }
+                else {
+                    gv = 200 - (fv + cv);
+                }
+                break;
+            case 'fastRng':
+                if (previousCtrl == 'cheapRng') {
+                    gv = 200 - (cv + fv);
+                }
+                else {
+                    cv = 200 - (gv + fv);
+                }
+                break;
+        }
+        $("#goodRng").val(gv.toString());
+        $("#fastRng").val(fv.toString());
+        $("#cheapRng").val(cv.toString());
+        previousCtrl = ctl.name;
+    }
+
+</script>
