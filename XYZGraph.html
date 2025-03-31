@@ -295,11 +295,6 @@
 		function diaplayParams() {
 			document.getElementById("params").innerHTML = "PARAMETERS: XMIN=" + xmin + "&nbsp;&nbsp;XMAX=" + xmax + "&nbsp;&nbsp;YMIN=" + ymin + "&nbsp;&nbsp;YMAX=" + ymax + "&nbsp;&nbsp;ZSCALE=" + zFactor + ".";
 		}
-
-		function OpenInfoPage() {
-			$('#storyPage').modal({ keyboard: false });
-		}
-
 	</script>
 </head>
 
@@ -307,7 +302,7 @@
 	<header>
 		<img src="home.jpg" alt="Go to the brianroys.com home page" title="Go to brianroys.com home page." width="50px;"
 			height="50px;" onclick="document.location='index.html';return false;" style="vertical-align: middle;" />
-		<img src="pageicon.png" title="The story behind this page." onclick="OpenInfoPage()"
+		<img src="pageicon.png" title="The story behind this page." onclick="$('#storyPage').modal({ keyboard: false });"
 			style="vertical-align: middle;">
 	</header>
 	<div>
@@ -368,7 +363,7 @@
 					</p>
 					<p>
 						It took about 20 minutes to draw on the Wang flatbed plotter, but it was amazing. I just 
-						<strong>showed</strong> it to my Alg-Trig teacher and got an A in the class (really).
+						<strong>showed</strong> a sample to my Alg-Trig teacher and got an A in the class (really).
 					</p>
 					<p>
 						I learned, the hard way, about things like cumulative-errors and drift.
@@ -399,7 +394,13 @@
 						I wanted to hide the lines behind:
 					</p>
 					<p>
-						<img src="3D4.jpg" width="300" height="200"><br />
+						<img src="3D4.jpg" width="300" height="200">
+					</p>
+					<p>
+						Then I added min/max shifting and the ability to hand-craft an XYZ function.
+						And other features but lost some of them in a file management fiasco,
+						so that is when I put it up on GitHub so I could at least keep track of versions. 
+						And recently (March 2025) I added the config files for CI/CD (about time).
 					</p>
 				</div>
 				<div class="modal-footer">
