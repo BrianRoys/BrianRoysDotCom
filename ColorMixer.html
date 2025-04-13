@@ -1,154 +1,188 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		.slidecontainer {
+			width: 100%;
+		}
 
-.slidecontainer {
-	width: 100%;
-}
+		.slider {
+			-webkit-appearance: none;
+			appearance: none;
+			background: #d3d3d3;
+			width: 100%;
+			height: 25px;
+			outline: none;
+			opacity: 0.7;
+			-webkit-transition: .2s;
+			transition: opacity .2s;
+		}
 
-.slider {
-	-webkit-appearance: none;
-	appearance: none;
-	background: #d3d3d3;
-	width: 100%;
-	height: 25px;
-	outline: none;
-	opacity: 0.7;
-	-webkit-transition: .2s;
-	transition: opacity .2s;
-}
+		.slider:hover {
+			opacity: 1;
+		}
 
-.slider:hover {
-  opacity: 1;
-}
+		.redSlider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 25px;
+			height: 25px;
+			background: red;
+			cursor: pointer;
+		}
 
-.redSlider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 25px;
-	height: 25px;
-	background: red;
-	cursor: pointer;
-}
+		.redSlider::-moz-range-thumb {
+			width: 25px;
+			height: 25px;
+			background: red;
+			cursor: pointer;
+		}
 
-.redSlider::-moz-range-thumb {
-	width: 25px;
-	height: 25px;
-	background: red;
-	cursor: pointer;
-}
+		.blueSlider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 25px;
+			height: 25px;
+			background: blue;
+			cursor: pointer;
+		}
 
-.blueSlider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 25px;
-	height: 25px;
-	background: blue;
-	cursor: pointer;
-}
+		.blueSlider::-moz-range-thumb {
+			width: 25px;
+			height: 25px;
+			background: blue;
+			cursor: pointer;
+		}
 
-.blueSlider::-moz-range-thumb {
-	width: 25px;
-	height: 25px;
-	background: blue;
-	cursor: pointer;
-}
+		.greenSlider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 25px;
+			height: 25px;
+			background: lightgreen;
+			cursor: pointer;
+		}
 
-.greenSlider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 25px;
-	height: 25px;
-	background: lightgreen;
-	cursor: pointer;
-}
+		.greenSlider::-moz-range-thumb {
+			width: 25px;
+			height: 25px;
+			background: green;
+			cursor: pointer;
+		}
 
-.greenSlider::-moz-range-thumb {
-	width: 25px;
-	height: 25px;
-	background: green;
-	cursor: pointer;
-}
+		.val {
+			border: none;
+			font-family: monospace;
+			width: 5em;
+			border-radius: 3px;
+		}
 
-.val {
-	border: none;
-	font-family: monospace;
-	width: 5em;
-	border-radius: 3px;
-}
+		.mixer {
+			width: 300px;
+			border-radius: 3px;
+			border-width: 6px;
+			border-style: solid;
+			border-color: black;
+		}
 
-.mixer {
-	width: 300px;
-	border-radius: 3px;
-	border-width: 6px;
-	border-style: solid;
-	border-color: black;
-}
+		#patch {
+			margin: 5px;
+			padding: 20px;
+			border-radius: 3px;
+		}
+	</style>
 
-#patch {
-	margin: 5px;
-	padding: 20px;
-	border-radius: 3px;
-}
+	<script type="text/javascript">
+		function ChangeColor() {
+			var r = document.frm1.sldrRed.value;
+			var g = document.frm1.sldrGreen.value;
+			var b = document.frm1.sldrBlue.value
+			var rx = Number(r).toString(16).padStart(2, '0').toUpperCase();
+			var gx = Number(g).toString(16).padStart(2, '0').toUpperCase();
+			var bx = Number(b).toString(16).padStart(2, '0').toUpperCase();
+			redVal.value = r + " (" + rx + ")";
+			greenVal.value = g + " (" + gx + ")";
+			blueVal.value = b + " (" + bx + ")";
+			var clr = "#" + rx + gx + bx;
+			var pat = document.getElementById("patch");
+			pat.style.backgroundColor = clr;
+			totVal.value = clr;
+		}
+	</script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="BRoys.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</head>
+<header class="br-alt-background">
+	<img src="home.jpg" alt="Go to the brianroys.com home page" title="Go to brianroys.com home page." width="50px;"
+		height="50px;" onclick="document.location='index.html';return false;" style="vertical-align: middle;" />
+	<img src="pageicon.png" title="The story behind this page." onclick="$('#storyPage').modal({ keyboard: false });"
+		style="vertical-align: middle;">
+</header>
 
-</style>
+<body>
+	<form id="frm1" name="frm1">
+		<fieldset class="mixer" id="mixer" name="mixer" form="frm1">
+			<legend>Color Mixer <input type="text" readonly id="totVal" class="val" /></legend>
+			<div id="patch" name="patch">
+				RED: <input type="text" readonly id="redVal" class="val" />
+				</br>
+				<input ID="sldrRed" type="range" min="0" max="255" value="128" class="redSlider slider"
+					oninput="ChangeColor()" />
+				</br>
+				GREEN: <input type="text" readonly id="greenVal" class="val" />
+				</br>
+				<input ID="sldrGreen" type="range" min="0" max="255" value="128" class="greenSlider slider"
+					oninput="ChangeColor()" />
+				</br>
+				BLUE: <input type="text" readonly id="blueVal" class="val" />
+				</br>
+				<input ID="sldrBlue" type="range" min="0" max="255" value="128" class="blueSlider slider"
+					oninput="ChangeColor()" />
+				</br>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="modal" id="storyPage" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">The story of the Color Mixer.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						When approaching a new development system, one of the first 'apps' I try is a color 
+						mixer. Cute, user interactive, and useful.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
+</body>
 
 <script type="text/javascript">
-	function ChangeColor()
-	{
-		var r = document.frm1.sldrRed.value;
-		var g = document.frm1.sldrGreen.value;
-		var b = document.frm1.sldrBlue.value
-		var rx = Number(r).toString(16).padStart(2, '0').toUpperCase();
-		var gx = Number(g).toString(16).padStart(2, '0').toUpperCase();
-		var bx = Number(b).toString(16).padStart(2, '0').toUpperCase();
-		redVal.value = r + " (" + rx + ")";
-		greenVal.value = g + " (" + gx + ")";
-		blueVal.value = b + " (" + bx + ")";
-		var clr = "#" + rx + gx + bx;
-		var pat = document.getElementById("patch"); 
-		pat.style.backgroundColor = clr;
-		totVal.value = clr;
-	}
+
+	<!-- Initialize the patch to the default color -->
+	ChangeColor();
 </script>
 
-<script src="https://kit.fontawesome.com/55fd6e3f47.js" crossorigin="anonymous"></script>
-
-</head>
-	<header>
-		<a href="index.html" title="Go to brianroys.com home page">
-			<img src="home.jpg" alt="Go to brianroys.com home page" width="80px;" height="80px;"/>
-		</a>
-	</header>
-	<body>
-		<form id="frm1" name="frm1">
-			<fieldset class="mixer" id="mixer" name="mixer" form="frm1">
-				<legend>Color Mixer <input type="text" readonly id="totVal" class="val" /></legend>
-				<div id="patch" name="patch"> 
-					RED: <input type="text" readonly id="redVal" class="val" />
-					</br>
-					<input ID="sldrRed" type="range" min="0" max="255" value="128" class="redSlider slider" 
-					oninput="ChangeColor()"/>
-					</br>
-					GREEN: <input type="text" readonly id="greenVal" class="val" />
-					</br>
-					<input ID="sldrGreen" type="range" min="0" max="255" value="128" class="greenSlider slider" 
-					oninput="ChangeColor()"/>
-					</br>
-					BLUE: <input type="text" readonly id="blueVal" class="val" />
-					</br>
-					<input ID="sldrBlue" type="range" min="0" max="255" value="128" class="blueSlider slider" 
-					oninput="ChangeColor()"/>
-					</br>
-				</div>
-			</fieldset>
-		</form>
-	</body>
-	<script type="text/javascript">
-		
-		<!-- Initialize the patch to the default color -->
-		ChangeColor();
-	</script>
 </html>
