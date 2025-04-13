@@ -1,0 +1,41 @@
+.br-alt-background {
+    background-color: beige;
+}
+
+.br-background {
+    background-color: white;
+}
+
+.br-oldschool-background {
+    background-color: rgb(15, 54, 15);
+}
+
+body {
+    margin: 1em;
+}
+
+#Screen {
+    background-color: rgb(15, 54, 15);
+    border: 3px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(99, 255, 99);
+    display: inline-block;
+    /* width: 60em; */
+    margin: 1em;
+    padding: 1em;
+}
+p {
+    font-family: Tahoma, 'Segoe UI', Geneva, Verdana, sans-serif;
+}
+h2 {
+    display: inline;
+}
+legend {
+    background-color: green;
+    border: 1px green;
+    border-radius: 5px;
+    padding: 5px;
+    color: yellow;
+}
