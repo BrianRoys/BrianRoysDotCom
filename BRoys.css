@@ -53,4 +53,9 @@ input[type="text"] {
     border-radius: 5px;
     padding: 5px;
     font-family: 'Courier New', Courier, monospace;
-}   
+}
+
+.br-top-bottom {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
