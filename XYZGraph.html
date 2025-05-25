@@ -46,11 +46,11 @@
 		var ydivs = steps;
 
 		// X, Y values in % (0 - 100)
-		var llX = 10;
+		var llX = 0;
 		var llY = 25;
 		var lrX = 50;
 		var lrY = 25;
-		var urX = 90;
+		var urX = 100;
 		var urY = 75;
 		var ulX = 50;
 		var ulY = 75;
@@ -294,22 +294,19 @@
 			drawGraph();
 		}
 		function diaplayParams() {
-			$("#params").innerHTML = "Parameters: XMin=" + xmin 
-			+ "&nbsp;&nbsp;XMax=" + xmax + "&nbsp;&nbsp;YMin=" + ymin 
-			+ "&nbsp;&nbsp;YMax=" + ymax + "&nbsp;&nbsp;ZScale=" + zFactor + ".";
+			var str = "Parameters:"
+			+ " XMin=" + xmin 
+			+ "&nbsp;&nbsp;XMax=" + xmax 
+			+ "&nbsp;&nbsp;YMin=" + ymin 
+			+ "&nbsp;&nbsp;YMax=" + ymax 
+			+ "&nbsp;&nbsp;ZScale=" + zFactor + ".";
+
+			document.getElementById("params").innerHTML = str;
 		}
 		function resizeWindow() {
 			const hdrRect = document.getElementById('MyHeader').getBoundingClientRect();
-
-			// console.log("Header: " + rect.left + " " + rect.top + " " + rect.height + " " + rect.width);
-			// console.log("Window: " + window.scrollX + " " + window.scrollY);	
-			console.log("Window: " + window.innerWidth + " x " + window.innerHeight);
-
 			$('#myCanvas').width(window.innerWidth - hdrRect.left * 4);
 			$('#myCanvas').height(window.innerHeight - (hdrRect.top + hdrRect.height + 25));
-
-			// xres = window.innerWidth;
-			// yres = window.innerHeight;
 		}
 
 		window.onresize = resizeWindow;
@@ -328,8 +325,6 @@
 	</header>
 	<div id="MyHeader" class="center" style="padding:1em;">
 		<h1 class="center">Brian Roys' 3D-Graph Program 3.0</h1>
-		<div id="params">
-		</div>
 		<div>
 			Display Frame ? <input type="checkbox" id="doDisplayFrame" value="Y" onchange="drawGraph();" />
 		</div>
@@ -344,6 +339,8 @@
 			<button onclick="shiftB(1)">++Back</button>
 			<button onclick="zoom(1)">++Z</button>
 			<button onclick="zoom(-1)">--Z</button>
+		</div>
+		<div id="params"> asdfasdf
 		</div>
 		<div>
 			Z=Formula(x,y): <input type="text" id="formula" onfocusout="tryDrawGraph();" placeholder="Math.sin(r)/(r/3)" />
