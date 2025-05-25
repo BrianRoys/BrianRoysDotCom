@@ -13,16 +13,11 @@ button {
 }
 
 .center {
-	// border: 1px solid black; 
 	text-align: center;
-	/* 
-	margin: auto;
-	width: 1024px;
-	*/
 }
 
 body {
-	margin: 1em;
+	margin: 0.5em;
 	font-family: Tahoma;
 	font-size: large;
 }
@@ -30,7 +25,7 @@ body {
 #params {
 	font-family: Tahoma;
 	font-size: large;
-	margin: 1em;
+	/* margin: 1em; */
 }
 .error {
 	font-size: xx-large;
