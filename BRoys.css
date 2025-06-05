@@ -10,6 +10,10 @@
     background-color: rgb(15, 54, 15);
 }
 
+#book {
+    width: 100%;
+}
+
 body {
     margin: 0.5em;
 }
